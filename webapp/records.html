@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>Seshat - Records</title>
+
+    <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
+
+    <style>
+        :root {
+            --mdc-theme-primary: #0e4ead;
+        }
+    </style>
+</head>
+<body class="mdc-typography">
+    <h2 class="mdc-typography--display2">Hello, Material Components!</h2>
+    <div id="app" class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+        <input type="text" class="mdc-text-field__input" id="demo-input">
+        <label for="demo-input" class="mdc-text-field__label">{{ message }}</label>
+    </div>
+
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/material-components-web/dist/material-components-web.js"></script>
+    <script>
+        mdc.autoInit();
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'MEOWMEOW!'
+            }
+        });
+    </script>
+</body>
+</html>
