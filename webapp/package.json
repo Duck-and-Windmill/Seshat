@@ -4,6 +4,7 @@
   "description": "Democratizing education",
   "main": "index.html",
   "dependencies": {
+    "@material/toolbar": "^0.28.0",
     "material-components-web": "^0.28.0",
     "vue": "^2.5.13"
   },
