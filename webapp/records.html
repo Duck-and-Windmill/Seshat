@@ -8,14 +8,58 @@
         :root {
             --mdc-theme-primary: #0e4ead;
         }
+
+        *, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        #content {
+            margin-top: 64px;
+        }
+
+        .toolbar-link {
+            color: rgba(255,255,255,0.7);
+            padding: 24px;
+            text-decoration: none;
+        }
+
+        .toolbar-link:hover {
+            color: rgba(255,255,255,1.0);
+        }
     </style>
 </head>
 <body class="mdc-typography">
-    <h2 class="mdc-typography--display2">Hello, Material Components!</h2>
-    <div id="app" class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-        <input type="text" class="mdc-text-field__input" id="demo-input">
-        <label for="demo-input" class="mdc-text-field__label">{{ message }}</label>
+    <header class="mdc-toolbar mdc-toolbar--fixed mdc-toolbar--waterfall">
+        <div class="mdc-toolbar__row">
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+                <span class="mdc-toolbar__title">Seshat</span>
+            </section>
+            <section class="mdc-toolbar__section">
+                <nav id="basic-tab-bar" class="mdc-tab-bar">
+                    <a class="mdc-tab mdc-tab--active" href="#one">Your Records</a>
+                    <a class="mdc-tab" href="#two">Shared Records</a>
+                    <span class="mdc-tab-bar__indicator"></span>
+                </nav>
+            </section>
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
+                <span class="mdc-toolbar__title"><a href="index.html" class="toolbar-link">Home</a></span>
+            </section>
+        </div>
+    </header>
+
+    <div class="mdc-layout-grid" id="content">
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+                <h2 class="mdc-typography--display2">Identifying Information and Academic Records</h2>
+                <div id="app" class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                    <input type="text" class="mdc-text-field__input" id="demo-input">
+                    <label for="demo-input" class="mdc-text-field__label">{{ message }}</label>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <script src="node_modules/vue/dist/vue.js"></script>
     <script src="node_modules/material-components-web/dist/material-components-web.js"></script>
