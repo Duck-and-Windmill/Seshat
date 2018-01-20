@@ -5,26 +5,26 @@ The Ejyptian God Of Wisdom, Knowledge, and Writing.
 - [Private Chain Setup](#private-chain-setup)
 
 # Private Chain Setup
-## Connection Parameters
-To connect to the Seshat chain you must configure your client with custom
-connection parameters.
+Run the following commands in bash from the root of the repository:
 
-```
-geth -identity "<node name>" init setup/genesis.json -datadir <data dir>`
-```
+- Edit the `setup/.env` file, change the `NODE_NAME` value to your name
+- Run `source setup/.env`
+- Run `./setup/init`
+- Run `./setup/client`
 
-- `<node name>`: The name the node will be known by
-- `<data dir>`: Custom data directory for the blockchain, must be separate
-	   from the main Etherium blockchain
+Next open the blockchain terminal with:
 
+- `geth attach`
 
-## Connecting
-Next connect to the Seshat blockchain with Geth.
+And type the following commands:
 
-```
-geth --datadir <data dir> --networkid "<chain id>"
-```
-
-- `<data dir>`: Custom blockchain directory from step above
-- `<chain id>`: Unique id of chain. Found in `config.chainId` field of
-	        `setup/genesis.json` file
+- `personal.newAccount()`
+    - This will create a new wallet on the blockchain
+    - Your wallet address will be printed
+- `miner.start()`
+    - Will start mining some etherium for us to use
+    - Wait 30 seconds then continue to the next step
+- `miner.stop()`
+    - Will stop the miner, we probably have enough etherium by now
+- `eth.getBalance(eth.coinbase)`
+    - Will check how much eth you have
