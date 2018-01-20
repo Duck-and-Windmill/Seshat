@@ -11,6 +11,9 @@ Run the following commands in bash from the root of the repository:
 - Run `source setup/.env`
 - Run `./setup/init`
 - Run `./setup/client`
+    - This command will run the etherium client. This process must be running
+      to communicate with the blockchain. Run all other commands in another
+      terminal.
 
 Next open the blockchain terminal with:
 
