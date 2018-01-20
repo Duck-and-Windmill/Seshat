@@ -3,6 +3,7 @@
     <title>Seshat - Records</title>
 
     <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style>
         :root {
@@ -26,6 +27,14 @@
 
         .toolbar-link:hover {
             color: rgba(255,255,255,1.0);
+        }
+
+        .mdc-card__primary.flexed {
+            display: flex;
+            justify-content: space-between;
+        }
+        .mdc-card__actions.reversed {
+            flex-direction: row-reverse;
         }
     </style>
 </head>
@@ -51,7 +60,85 @@
     <div class="mdc-layout-grid" id="content">
         <div class="mdc-layout-grid__inner">
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-                <h2 class="mdc-typography--display2">Identifying Information and Academic Records</h2>
+                <div class="mdc-card">
+                  <section class="mdc-card__primary flexed">
+                    <h1 class="mdc-card__title mdc-card__title--large">Personal Information</h1>
+                    <button class="mdc-button">
+                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                    </button>
+                  </section>
+                  <section class="mdc-card__supporting-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.
+                  </section>
+                  <section class="mdc-card__actions reversed">
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Save</button>
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Cancel</button>
+                  </section>
+                </div>
+
+                <div class="mdc-card">
+                  <section class="mdc-card__primary flexed">
+                    <h1 class="mdc-card__title mdc-card__title--large">Transcripts</h1>
+                    <button class="mdc-button">
+                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                    </button>
+                  </section>
+                  <section class="mdc-card__supporting-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.
+                  </section>
+                  <section class="mdc-card__actions reversed">
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Save</button>
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Cancel</button>
+                  </section>
+                </div>
+
+                <div class="mdc-card">
+                  <section class="mdc-card__primary flexed">
+                    <h1 class="mdc-card__title mdc-card__title--large">Test Scores</h1>
+                    <button class="mdc-button">
+                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                    </button>
+                  </section>
+                  <section class="mdc-card__supporting-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.
+                  </section>
+                  <section class="mdc-card__actions reversed">
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Save</button>
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Cancel</button>
+                  </section>
+                </div>
+
+                <div class="mdc-card">
+                  <section class="mdc-card__primary flexed">
+                    <h1 class="mdc-card__title mdc-card__title--large">Sharing</h1>
+                    <button class="mdc-button">
+                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                    </button>
+                  </section>
+                  <section class="mdc-card__supporting-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.
+                  </section>
+                  <section class="mdc-card__actions reversed">
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Save</button>
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Cancel</button>
+                  </section>
+                </div>
+
+
+
+
                 <div id="app" class="mdc-text-field" data-mdc-auto-init="MDCTextField">
                     <input type="text" class="mdc-text-field__input" id="demo-input">
                     <label for="demo-input" class="mdc-text-field__label">{{ message }}</label>
