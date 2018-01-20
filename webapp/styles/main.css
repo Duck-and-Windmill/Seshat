@@ -1,1 +1,40 @@
 /* Add Here */
+
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	font-family: 'Raleway', sans-serif;
+}
+
+.full {
+	width: 100%;
+	height: 100%;
+}
+
+.panel-1 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	/*
+	background: linear-gradient(
+      rgba(192,192,192, 0.3), 
+      rgba(192,192,192, 0.3)
+    ), url(../imgs/banner.jpg);
+    */
+    background-image: url(../imgs/banner-1.jpg);
+	background-position: 0;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.center {
+	margin: auto 0;
+	border: 0px white solid;
+}
+
+#banner-text {
+	padding-left: 10%;
+	color: white;
+	font-size: 5em;
+}

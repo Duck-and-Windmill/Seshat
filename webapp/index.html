@@ -3,6 +3,8 @@
     <title>Seshat</title>
 
     <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
     <style>
         :root {
@@ -10,9 +12,15 @@
         }
     </style>
 </head>
-<body class="mdc-typography">
-    <h2 class="mdc-typography--display2">Hello, Material Components!</h2>
-    <div id="app" class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+<body class="">
+    <div class="full panel-1">
+        <article id="banner-text" class="center">
+            <h1 class="">Seshat</h1>
+        </article>
+    </div>
+            
+
+    <div id="app" class="mdc-text-field" data-mdc-auto-init="MDCTextField" style="display: none">
         <input type="text" class="mdc-text-field__input" id="demo-input">
         <label for="demo-input" class="mdc-text-field__label">{{ message }}</label>
     </div>
@@ -25,7 +33,7 @@
         var app = new Vue({
             el: '#app',
             data: {
-                message: 'MEOWMEOW!'
+                message: 'Input!'
             }
         });
     </script>
