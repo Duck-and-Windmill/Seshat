@@ -4,6 +4,11 @@
   "description": "Democratizing education",
   "main": "index.html",
   "dependencies": {
+    "@material/button": "^0.28.0",
+    "@material/card": "^0.28.0",
+    "@material/layout-grid": "^0.24.0",
+    "@material/tabs": "^0.28.0",
+    "@material/toolbar": "^0.28.0",
     "material-components-web": "^0.28.0",
     "vue": "^2.5.13"
   },

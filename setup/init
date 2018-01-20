@@ -1,0 +1,3 @@
+#!/bin/bash
+geth --identity "$NODE_NAME" init "$GENESIS" --datadir "$DATA_DIR"
+

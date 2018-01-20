@@ -3,19 +3,150 @@
     <title>Seshat - Records</title>
 
     <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style>
         :root {
             --mdc-theme-primary: #0e4ead;
         }
+
+        *, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        #content {
+            margin-top: 64px;
+        }
+
+        .toolbar-link {
+            color: rgba(255,255,255,0.7);
+            padding: 24px;
+            text-decoration: none;
+        }
+
+        .toolbar-link:hover {
+            color: rgba(255,255,255,1.0);
+        }
+
+        .mdc-card__primary.flexed {
+            display: flex;
+            justify-content: space-between;
+        }
+        .mdc-card__actions.reversed {
+            flex-direction: row-reverse;
+        }
     </style>
 </head>
 <body class="mdc-typography">
-    <h2 class="mdc-typography--display2">Hello, Material Components!</h2>
-    <div id="app" class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-        <input type="text" class="mdc-text-field__input" id="demo-input">
-        <label for="demo-input" class="mdc-text-field__label">{{ message }}</label>
+    <header class="mdc-toolbar mdc-toolbar--fixed mdc-toolbar--waterfall">
+        <div class="mdc-toolbar__row">
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+                <span class="mdc-toolbar__title">Seshat</span>
+            </section>
+            <section class="mdc-toolbar__section">
+                <nav id="basic-tab-bar" class="mdc-tab-bar">
+                    <a class="mdc-tab mdc-tab--active" href="#one">Your Records</a>
+                    <a class="mdc-tab" href="#two">Shared Records</a>
+                    <span class="mdc-tab-bar__indicator"></span>
+                </nav>
+            </section>
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
+                <span class="mdc-toolbar__title"><a href="index.html" class="toolbar-link">Home</a></span>
+            </section>
+        </div>
+    </header>
+
+    <div class="mdc-layout-grid" id="content">
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+                <div class="mdc-card">
+                  <section class="mdc-card__primary flexed">
+                    <h1 class="mdc-card__title mdc-card__title--large">Personal Information</h1>
+                    <button class="mdc-button">
+                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                    </button>
+                  </section>
+                  <section class="mdc-card__supporting-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.
+                  </section>
+                  <section class="mdc-card__actions reversed">
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Save</button>
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Cancel</button>
+                  </section>
+                </div>
+
+                <div class="mdc-card">
+                  <section class="mdc-card__primary flexed">
+                    <h1 class="mdc-card__title mdc-card__title--large">Transcripts</h1>
+                    <button class="mdc-button">
+                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                    </button>
+                  </section>
+                  <section class="mdc-card__supporting-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.
+                  </section>
+                  <section class="mdc-card__actions reversed">
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Save</button>
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Cancel</button>
+                  </section>
+                </div>
+
+                <div class="mdc-card">
+                  <section class="mdc-card__primary flexed">
+                    <h1 class="mdc-card__title mdc-card__title--large">Test Scores</h1>
+                    <button class="mdc-button">
+                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                    </button>
+                  </section>
+                  <section class="mdc-card__supporting-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.
+                  </section>
+                  <section class="mdc-card__actions reversed">
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Save</button>
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Cancel</button>
+                  </section>
+                </div>
+
+                <div class="mdc-card">
+                  <section class="mdc-card__primary flexed">
+                    <h1 class="mdc-card__title mdc-card__title--large">Sharing</h1>
+                    <button class="mdc-button">
+                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                    </button>
+                  </section>
+                  <section class="mdc-card__supporting-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.
+                  </section>
+                  <section class="mdc-card__actions reversed">
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Save</button>
+                    <button class="mdc-button mdc-button--compact mdc-card__action">Cancel</button>
+                  </section>
+                </div>
+
+
+
+
+                <div id="app" class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                    <input type="text" class="mdc-text-field__input" id="demo-input">
+                    <label for="demo-input" class="mdc-text-field__label">{{ message }}</label>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <script src="node_modules/vue/dist/vue.js"></script>
     <script src="node_modules/material-components-web/dist/material-components-web.js"></script>

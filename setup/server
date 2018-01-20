@@ -1,0 +1,8 @@
+#!/bin/bash
+geth \
+    --datadir "$DATA_DIR" \
+    --networkid "$NET_ID" \
+    --nat "extip:$STATIC_IP" \
+    --rpc \
+    --rpcaddr "$STATIC_IP" \
+    --rpcport "$RPC_PORT"
