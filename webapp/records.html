@@ -17,6 +17,7 @@
 
         #content {
             margin-top: 64px;
+            max-width: 800px;
         }
 
         .toolbar-link {
@@ -36,6 +37,22 @@
         .mdc-card__actions.reversed {
             flex-direction: row-reverse;
         }
+        .mdc-card {
+            margin: 50px 0 50px 0;
+        }
+        .edit-button {
+            color: rgba(125,125,125,0.7);
+        }
+        .edit-button:hover {
+            color: rgba(125,125,125,1.0);
+        }
+
+        .panel {
+            display: none;
+        }
+        .panel.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="mdc-typography">
@@ -46,8 +63,8 @@
             </section>
             <section class="mdc-toolbar__section">
                 <nav id="basic-tab-bar" class="mdc-tab-bar">
-                    <a class="mdc-tab mdc-tab--active" href="#one">Your Records</a>
-                    <a class="mdc-tab" href="#two">Shared Records</a>
+                    <a class="mdc-tab mdc-tab--active" href="#panel-1">Your Records</a>
+                    <a class="mdc-tab" href="#panel-2">Shared Records</a>
                     <span class="mdc-tab-bar__indicator"></span>
                 </nav>
             </section>
@@ -58,13 +75,13 @@
     </header>
 
     <div class="mdc-layout-grid" id="content">
-        <div class="mdc-layout-grid__inner">
-            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        <div class="mdc-layout-grid__inner panels">
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 panel active" id="panel-1" role="tabpanel" aria-hidden="false">
                 <div class="mdc-card">
                   <section class="mdc-card__primary flexed">
                     <h1 class="mdc-card__title mdc-card__title--large">Personal Information</h1>
                     <button class="mdc-button">
-                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                        <i class="material-icons mdc-button__icon edit-button">mode_edit</i>
                     </button>
                   </section>
                   <section class="mdc-card__supporting-text">
@@ -83,7 +100,7 @@
                   <section class="mdc-card__primary flexed">
                     <h1 class="mdc-card__title mdc-card__title--large">Transcripts</h1>
                     <button class="mdc-button">
-                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                        <i class="material-icons mdc-button__icon edit-button">mode_edit</i>
                     </button>
                   </section>
                   <section class="mdc-card__supporting-text">
@@ -102,7 +119,7 @@
                   <section class="mdc-card__primary flexed">
                     <h1 class="mdc-card__title mdc-card__title--large">Test Scores</h1>
                     <button class="mdc-button">
-                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                        <i class="material-icons mdc-button__icon edit-button">mode_edit</i>
                     </button>
                   </section>
                   <section class="mdc-card__supporting-text">
@@ -121,7 +138,7 @@
                   <section class="mdc-card__primary flexed">
                     <h1 class="mdc-card__title mdc-card__title--large">Sharing</h1>
                     <button class="mdc-button">
-                        <i class="material-icons mdc-button__icon">mode_edit</i>
+                        <i class="material-icons mdc-button__icon edit-button">mode_edit</i>
                     </button>
                   </section>
                   <section class="mdc-card__supporting-text">
@@ -136,18 +153,30 @@
                   </section>
                 </div>
 
-
-
-
                 <div id="app" class="mdc-text-field" data-mdc-auto-init="MDCTextField">
                     <input type="text" class="mdc-text-field__input" id="demo-input">
                     <label for="demo-input" class="mdc-text-field__label">{{ message }}</label>
+                </div>
+            </div>
+
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 panel" id="panel-2" role="tabpanel" aria-hidden="true">
+                <div class="mdc-card">
+                  <section class="mdc-card__primary flexed">
+                    <h1 class="mdc-card__title mdc-card__title--large">Records Shared With You</h1>
+                  </section>
+                  <section class="mdc-card__supporting-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.
+                  </section>
                 </div>
             </div>
         </div>
     </div>
 
 
+    <script src="node_modules/web3/dist/web3.js"></script>
     <script src="node_modules/vue/dist/vue.js"></script>
     <script src="node_modules/material-components-web/dist/material-components-web.js"></script>
     <script>
@@ -158,6 +187,44 @@
             data: {
                 message: 'MEOWMEOW!'
             }
+        });
+
+        if (typeof web3 !== 'undefined') {
+          web3 = new Web3(web3.currentProvider);
+        } else {
+          // set the provider you want from Web3.providers
+          web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        }
+
+        var coinbase = web3.eth.coinbase;
+        var balance = web3.eth.getBalance(coinbase);
+
+        console.log(web3); // {eth: .., shh: ...} // it's here!
+        console.log(balance);
+
+
+        var dynamicTabBar = window.dynamicTabBar = new mdc.tabs.MDCTabBar(document.querySelector('#basic-tab-bar'));
+        var panels = document.querySelector('.panels');
+
+        dynamicTabBar.tabs.forEach(function(tab) {
+          tab.preventDefaultOnClick = true;
+        });
+
+        function updatePanel(index) {
+          var activePanel = panels.querySelector('.panel.active');
+          if (activePanel) {
+            activePanel.classList.remove('active');
+          }
+          var newActivePanel = panels.querySelector('.panel:nth-child(' + (index + 1) + ')');
+          if (newActivePanel) {
+            newActivePanel.classList.add('active');
+          }
+        }
+
+        dynamicTabBar.listen('MDCTabBar:change', function ({detail: tabs}) {
+          var nthChildIndex = tabs.activeTabIndex;
+
+          updatePanel(nthChildIndex);
         });
     </script>
 </body>

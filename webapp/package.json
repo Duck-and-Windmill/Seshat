@@ -10,7 +10,8 @@
     "@material/tabs": "^0.28.0",
     "@material/toolbar": "^0.28.0",
     "material-components-web": "^0.28.0",
-    "vue": "^2.5.13"
+    "vue": "^2.5.13",
+    "web3": "^0.20.4"
   },
   "devDependencies": {},
   "scripts": {
