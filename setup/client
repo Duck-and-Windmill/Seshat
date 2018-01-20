@@ -1,2 +1,2 @@
 #!/bin/bash
-geth --datadir "$DATA_DIR"
+geth --networkid "$NET_ID" --datadir "$DATA_DIR"

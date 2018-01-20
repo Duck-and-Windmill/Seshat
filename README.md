@@ -24,6 +24,8 @@ And type the following commands:
 - `personal.newAccount()`
     - This will create a new wallet on the blockchain
     - Your wallet address will be printed
+- `eth.defaultAccount = eth.accounts[0]`
+    - This will tell the terminal to use your eth wallet
 - `miner.start()`
     - Will start mining some etherium for us to use
     - Wait 30 seconds then continue to the next step
