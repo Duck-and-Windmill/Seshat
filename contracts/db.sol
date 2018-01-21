@@ -49,9 +49,9 @@ contract db {
       * canView determines if the message sender can view the specified
       * address's information.
       * @param addr Address to check view access to
-      * @returns bool indicating if the message sender has view access
+      * @return bool indicating if the message sender has view access
       */
-    function canView(address addr) public returns (bool) {
+    function canView(address addr) public view returns (bool) {
         // Check if owner
         if (msg.sender == addr) {
             return true;
@@ -71,9 +71,9 @@ contract db {
       * a specified category.
       * @param addr Address to check edit access to
       * @param category Data category to check edit access to
-      * @returns bool indicating if the message sender has edit access
+      * @return bool indicating if the message sender has edit access
       */
-    function canEdit(address addr, string category) public returns (bool) {
+    function canEdit(address addr, string category) public view returns (bool) {
         // Check if owner
         if (msg.sender == addr) {
             return true;
@@ -123,30 +123,30 @@ contract db {
     }
 
     /**
-      * getObj retrieves information for the specified address and category.
+      * get retrieves information for the specified address and category.
       * @param addr Address to get data for
       * @param category Data category to retrieve data for
-      * @returns string Blob of data
+      * @return string Blob of data
       */
-    function getObj(address addr, string category) public returns (string) {
+    function get(address addr, string category) public view returns (string) {
         // Ensure owner or person with access
         require(canView(addr));
 
         // Return data
-        return data[addr];
+        return data[addr][category];
     }
 
     /**
-      * setObj sets a data category's value
+      * set sets a data category's value
       * @param addr Address to edit data for
       * @param category Data category to set
-      * @param data String data blob to store
+      * @param blob String data blob to store
       */
-    function setObj(address addr, string category, string data) public {
+    function set(address addr, string category, string blob) public {
         // Ensure message sender can edit address's information
         require(canEdit(addr, category));
 
         // Set
-        data[msg.sender][category] = data;
+        data[msg.sender][category] = blob;
     }
 }
