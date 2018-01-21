@@ -51,13 +51,20 @@ function setObj(addr, obj) {
  * @param category String Name of type of data
  * @returns Object Data
  */
-function getObj(addr) {
-    return JSON.parse(dbContract.get(addr));
+function getObj(addr, cb) {
+    dbContract.get(addr, function(a, b, c){
+        console.log("getObj: ", a, b, c);
+        cb(a, b, c);
+    });
 }
 
 //window.onload = function() {
-    var bioData, transcriptData, testData;
-    var dat = getObj(selfAddr);
+var bioData, transcriptData, testData;
+var dat = getObj(selfAddr, function(a, b, c) {
+    console.log(a, b, c);
+});
+
+function setPersonalInfo(dat) {
     if(dat[CAT_BIO] == undefined) {
         dat[CAT_BIO] = {};
     }
@@ -84,6 +91,7 @@ function getObj(addr) {
         document.querySelector("#bio-languages").value = (bioData.languages != null) ? bioData.languages : '';
         document.querySelector("#bio-nationality").value = (bioData.nationality != null) ? bioData.nationality : '';
     }
+}
 
 
     document.querySelector("#update-bio").addEventListener('click', function(){
