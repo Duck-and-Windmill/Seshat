@@ -1,7 +1,6 @@
 #!/bin/bash
 source ./setup/.env
 geth \
-    --identity "$NODE_NAME" \
+    --networkid "$NET_ID" \
     --datadir "$DATA_DIR" \
-    init "$GENESIS"
-
+    --bootnodes "$ENODE"

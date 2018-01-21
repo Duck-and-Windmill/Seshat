@@ -1,20 +1,11 @@
-.PHONY: init run connect server
-
-NODE_NAME="nh"
-DATA_DIR="data"
-NETWORK_ID="4013199810202018"
-GENESIS="setup/genesis.json"
+.PHONY: connect server upload upload-dirs upload-files
 
 SSH_USER="root"
 SSH_HOST="seshat.noahh.io"
 
-# init sets up the initial data about the blockchain
-init:
-	geth --identity "${NODE_NAME}" init "${GENESIS}" --datadir "${DATA_DIR}"
-
-# run starts a geth session connected to the blockchain
-run:
-	geth --datadir "${DATA_DIR}" --networkid "${NETWORK_ID}"
+REMOTE_DIR="/root/chain"
+SRC_DIRS="./contracts ./setup"
+SRC_FILES=Makefile
 
 # connect opens a terminal connected to the blockchain
 connect:
@@ -23,3 +14,14 @@ connect:
 # server connects to the cloud blockchain node
 server:
 	ssh "${SSH_USER}@${SSH_HOST}"
+
+# upload transfers the project files to our remote digital ocean server
+upload: upload-dirs upload-files
+
+# upload-dirs uploads the specified source directories
+upload-dirs:
+	scp -pr "${SRC_DIRS}" "${SSH_USER}@${SSH_HOST}:${REMOTE_DIR}"
+
+# upload-files uploads the specified source files
+upload-files:
+	scp "${SRC_FILES}" "${SSH_USER}@${SSH_HOST}:${REMOTE_DIR}"

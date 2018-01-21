@@ -1,0 +1,8 @@
+#!/bin/bash
+source ./setup/.env
+geth \
+    --networkid "$NET_ID" \
+    --datadir "$DATA_DIR" \
+    --nat "extip:$STATIC_IP" \
+    --rpc \
+    --rpcaddr "$STATIC_IP"

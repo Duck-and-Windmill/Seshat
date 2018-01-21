@@ -17,6 +17,8 @@ contract db {
 
     // get retrieves information for the specified address
     function get(address addr) returns (string) {
+        return data[addr];
+        /*
         // If requesting own information
         if (addr == msg.sender) {
             return data[addr];
@@ -33,6 +35,7 @@ contract db {
 
         // If not found in access list, don't have permissions
         require(false);
+        */
     }
 
     // set sets a data item
