@@ -16,7 +16,7 @@ web3 = ethConnect();
 // Constants
 var dbAbi = [{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"grantEdit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"kill","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"revokeEdit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"datOwner","type":"address"},{"name":"viewer","type":"address"}],"name":"canView","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"grantView","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"datOwner","type":"address"},{"name":"editor","type":"address"},{"name":"category","type":"string"}],"name":"canEdit","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"},{"name":"blob","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"revokeView","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
 
-const dbAddr = "0x7a472a829c2bb920e6b96cc1979487b3880cd8c3"
+const dbAddr = "0x182aebf22024e26a926f67c15fc07ffdddd59601"
 const selfAddr = web3.eth.coinbase;
 
 const CAT_BIO = "bio";
@@ -40,7 +40,7 @@ const dbContract = dbDef.at(dbAddr)
  */
 function setObj(addr, category, obj) {
     console.log(addr, category, obj)
-    dbContract.set.call(addr, category, obj);
+    dbContract.set.sendTransaction(addr, category, obj);
 }
 
 /**
