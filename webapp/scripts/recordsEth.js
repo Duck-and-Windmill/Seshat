@@ -35,7 +35,7 @@ const dbContract = dbDef.at(dbAddr)
  * @param obj Object data to store
  */
 function setObj(addr, category, obj) {
-
+    dbContract.setObj(addr, category, obj);
 }
 
 /**
@@ -44,5 +44,15 @@ function setObj(addr, category, obj) {
  * @param category String Name of type of data
  * @returns Object Data
  */
-function getObj(add, category) {
+function getObj(addr, category) {
+    return dbContract.getObj.call(addr, category);
+}
+
+window.onload = function() {
+    var bioData = JSON.parse(getObj(selfAddr, ));
+    var transcriptData = JSON.parse(getObj(selfAddr, ));
+    var testData = JSON.parse(getObj(selfAddr, ));
+
+    var transcriptBody = document.querySelector("#transcript-text");
+    var testBody = document.querySelector("#tests-text");
 }
