@@ -40,6 +40,11 @@ html, body {
 .hidden-1, .hidden-2 {
 }
 
+.tlist li {
+	display: block;
+	width: 100%;
+	border-bottom: 1px grey solid;
+}
 
 #bu, #neu {
 	cursor: pointer;
