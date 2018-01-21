@@ -14,9 +14,11 @@ function ethConnect() {
 web3 = ethConnect();
 
 // Constants
-var dbAbi = [{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"grantEdit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"kill","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"revokeEdit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"datOwner","type":"address"},{"name":"viewer","type":"address"}],"name":"canView","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"grantView","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"datOwner","type":"address"},{"name":"editor","type":"address"},{"name":"category","type":"string"}],"name":"canEdit","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"},{"name":"blob","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"revokeView","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
+var dbAbi = [{"constant":false,"inputs":[],"name":"kill","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"blob","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"}],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
 
-const dbAddr = "0x182aebf22024e26a926f67c15fc07ffdddd59601"
+
+
+const dbAddr = "0xe195208dd5bf78b41d7b554693dbf991c4193d47"
 const selfAddr = web3.eth.coinbase;
 
 const CAT_BIO = "bio";
@@ -38,9 +40,9 @@ const dbContract = dbDef.at(dbAddr)
  * @param category String Name of type of data
  * @param obj Object data to store
  */
-function setObj(addr, category, obj) {
-    console.log(addr, category, obj)
-    dbContract.set.sendTransaction(addr, category, obj);
+function setObj(addr, obj) {
+    //console.log(addr, obj)
+    dbContract.set(addr, JSON.stringify(obj));
 }
 
 /**
@@ -49,25 +51,20 @@ function setObj(addr, category, obj) {
  * @param category String Name of type of data
  * @returns Object Data
  */
-function getObj(addr, category) {
-    return dbContract.get.call(addr, category);
+function getObj(addr) {
+    return JSON.parse(dbContract.get(addr));
 }
 
 //window.onload = function() {
     var bioData, transcriptData, testData;
-    bioRaw = getObj(selfAddr, CAT_BIO);
-    if (bioRaw != null && bioRaw != "") {
-        bioData = JSON.parse(bioRaw);
+    var dat = getObj(selfAddr);
+    if(dat[CAT_BIO] == undefined) {
+        dat[CAT_BIO] = {};
     }
-    transcriptRaw = getObj(selfAddr, CAT_TRANSCRIPT);
-    if (transcriptRaw != null && transcriptRaw != "") {
-        transcriptData = JSON.parse(transcriptRaw);
-    }
-    testRaw = getObj(selfAddr, CAT_TESTS);
-    if (testRaw != null && testRaw != "") {
-        testData = JSON.parse(testRaw);
-    }
-
+    var noahtest = "foo";
+    bioData = dat[CAT_BIO];
+    transcriptData = dat[CAT_TRANSCRIPT];
+    testData = dat[CAT_TESTS];
 
     var transcriptBody = document.querySelector("#transcript-text");
     var testBody = document.querySelector("#tests-text");
@@ -90,13 +87,18 @@ function getObj(addr, category) {
 
 
     document.querySelector("#update-bio").addEventListener('click', function(){
-        var data = {};
-        data.firstName = document.querySelector("#bio-first-name").value;
-        data.middleName = document.querySelector("#bio-middle-name").value;
-        data.lastName = document.querySelector("#bio-last-name").value;
-        data.dob = document.querySelector("#bio-dob").value;
-        data.languages = document.querySelector("#bio-languages").value;
-        data.nationality = document.querySelector("#bio-nationality").value;
-        setObj(selfAddr, CAT_BIO, JSON.stringify(data));
+        var bioData = {};
+
+        bioData.firstName = document.querySelector("#bio-first-name").value;
+        bioData.middleName = document.querySelector("#bio-middle-name").value;
+        bioData.lastName = document.querySelector("#bio-last-name").value;
+        bioData.dob = document.querySelector("#bio-dob").value;
+        bioData.languages = document.querySelector("#bio-languages").value;
+        bioData.nationality = document.querySelector("#bio-nationality").value;
+
+        console.log(bioData, dat);
+
+        dat[CAT_BIO] = bioData;
+        setObj(selfAddr, dat);
     });
 //}

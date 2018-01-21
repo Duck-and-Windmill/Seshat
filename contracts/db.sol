@@ -41,7 +41,7 @@ contract db {
     // deletes the contract
     function kill() public {
         // Ensure owner is calling
-        require(msg.sender == owner);
+        require(keccak256(msg.sender) == keccak256(owner));
 
         // Kill
         selfdestruct(owner);
@@ -54,9 +54,11 @@ contract db {
       * @param viewer Address of data viewer
       * @return bool indicating if the message sender has view access
       */
-    function canView(address datOwner, address viewer) public view returns (bool) {
+    /*function canView(address datOwner, address viewer) public view returns (bool) {
         // Check if owner
-        if (datOwner == viewer) {
+        // @log datOwner
+        // @log viewer
+        if (keccak256(datOwner) == keccak256(viewer)) {
             return true;
         }
 
@@ -68,7 +70,7 @@ contract db {
         // Otherwise no access
         return false;
     }
-
+*/
     /**
       * canEdit determines if the message sender can edit an address's data for
       * a specified category.
@@ -79,7 +81,7 @@ contract db {
       */
     function canEdit(address datOwner, address editor, string category) public view returns (bool) {
         // Check if owner
-        if (datOwner == editor) {
+        if (keccak256(datOwner) == keccak256(editor)) {
             return true;
         }
 
@@ -96,18 +98,18 @@ contract db {
       * grantView gives view access to the message sender's data
       * @param addr Address to grant view access to
       */
-    function grantView(address addr) public {
+/*function grantView(address addr) public {
         viewAccess[msg.sender][addr] = true;
     }
-
+*/
     /**
       * revokeView removes view access to the message sender's data
       * @param addr Address to remove view access from
       */
-    function revokeView(address addr) public {
+   /* function revokeView(address addr) public {
         delete viewAccess[msg.sender][addr];
     }
-
+*/
     /**
       * grantEdit gives edit access to the message sender's data
       * @param addr Address to grant edit access to
@@ -133,11 +135,11 @@ contract db {
       * @return string Blob of data
       */
     function get(address addr, string category) public view returns (string) {
-        // Ensure owner or person with access
-        require(canView(addr, msg.sender));
-
-        // Return data
-        return data[addr][category];
+        if (keccak256(addr) == keccak256( msg.sender) || viewAccess[addr][ msg.sender]) {
+            return data[addr][category];
+        } else {
+            return "UNAUTHORIZED";
+        }
     }
 
     /**
@@ -146,11 +148,12 @@ contract db {
       * @param category Data category to set
       * @param blob String data blob to store
       */
-    function set(address addr, string category, string blob) public {
-        // Ensure message sender can edit address's information
-        require(canEdit(addr, msg.sender, category));
-
-        // Set
-        data[msg.sender][category] = blob;
+    function set(address addr, string category, string blob) public returns (string) {
+        if (keccak256(addr) == keccak256(msg.sender) || editAccess[addr][msg.sender][category]) {
+            data[msg.sender][category] = blob;
+            return "SUCCESS";
+        } else {
+            return "UNAUTHORIZED";
+        }
     }
 }
