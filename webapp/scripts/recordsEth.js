@@ -3,11 +3,11 @@
  * @returns Web3 object with Etherium API
  */
 function ethConnect() {
-    if (typeof web3 !== 'undefined') {
-        return new Web3(web3.currentProvider);
-    } else {
+    //if (typeof web3 !== 'undefined') {
+    //   return new Web3(web3.currentProvider);
+    //} else {
         return new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-    }
+    //}
 }
 
 // Connect to geth API
@@ -41,7 +41,6 @@ const dbContract = dbDef.at(dbAddr)
  * @param obj Object data to store
  */
 function setObj(addr, obj) {
-    //console.log(addr, obj)
     dbContract.set(addr, JSON.stringify(obj));
 }
 
@@ -61,12 +60,12 @@ function getObj(addr, cb) {
 var bioData, transcriptData, testData;
 var data = {};
 getObj(selfAddr, setPersonalInfo);
+
 document.querySelector("#addr-input").value = selfAddr;
 
 function setPersonalInfo(dat) {
-    if (dat != null) {
-    console.log(dat)
     data = dat;
+
     if(dat[CAT_BIO] == undefined) {
         dat[CAT_BIO] = {};
     }
@@ -74,7 +73,6 @@ function setPersonalInfo(dat) {
     bioData = dat[CAT_BIO];
     transcriptData = dat[CAT_TRANSCRIPT];
     testData = dat[CAT_TESTS];
-    }
 
     var transcriptBody = document.querySelector("#transcript-text");
     var testBody = document.querySelector("#tests-text");
@@ -97,24 +95,22 @@ function setPersonalInfo(dat) {
 }
 
 
-    document.querySelector("#update-bio").addEventListener('click', function(){
-        var bioData = {};
+document.querySelector("#update-bio").addEventListener('click', function(){
+    var bioData = {};
 
-        bioData.firstName = document.querySelector("#bio-first-name").value;
-        bioData.middleName = document.querySelector("#bio-middle-name").value;
-        bioData.lastName = document.querySelector("#bio-last-name").value;
-        bioData.dob = document.querySelector("#bio-dob").value;
-        bioData.languages = document.querySelector("#bio-languages").value;
-        bioData.nationality = document.querySelector("#bio-nationality").value;
+    bioData.firstName = document.querySelector("#bio-first-name").value;
+    bioData.middleName = document.querySelector("#bio-middle-name").value;
+    bioData.lastName = document.querySelector("#bio-last-name").value;
+    bioData.dob = document.querySelector("#bio-dob").value;
+    bioData.languages = document.querySelector("#bio-languages").value;
+    bioData.nationality = document.querySelector("#bio-nationality").value;
 
-        console.log(bioData, data);
+    data[CAT_BIO] = bioData;
 
-        data[CAT_BIO] = bioData;
-        setObj(selfAddr, data);
-    });
+    setObj(selfAddr, data);
+});
 
 
-    document.querySelector("#search-addr").addEventListener('click', function(){
-        getObj(document.querySelector("#addr-input").value, setPersonalInfo);
-    });
-//}
+document.querySelector("#search-addr").addEventListener('click', function(){
+    getObj(document.querySelector("#addr-input").value, setPersonalInfo);
+});
