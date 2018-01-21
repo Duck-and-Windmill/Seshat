@@ -29,20 +29,20 @@ const dbDef = web3.eth.contract(dbAbi);
 const dbContract = dbDef.at(dbAddr)
 
 /**
- * setDb updates a piece of information using the database contract
+ * setObj updates a piece of information using the database contract
  * @param addr String Address of data owner
  * @param category String Name of type of data
  * @param obj Object data to store
  */
-function setDb(addr, category, obj) {
+function setObj(addr, category, obj) {
 
 }
 
 /**
- * getDb retrieves a piece of information using the database contract
+ * getObj retrieves a piece of information using the database contract
  * @param addr String Address of the data owner
  * @param category String Name of type of data
  * @returns Object Data
  */
-function getDb(add, category) {
+function getObj(add, category) {
 }
