@@ -13,22 +13,24 @@ contract db {
 
     /**
       * editAccess holds grants to edit data categories.
-      * The first keys are user addresses. Values are mappings. Where keys
-      * are categories, and values are booleans.
+      * The first keys are owner addresses. Values are mappings. Where keys
+      * are editor addresses and values are mappings. Where keys are categories,
+      * and values are booleans.
       *
       * If an address and category have a true boolean value, then the address
       * can edit to that category
       */
-    mapping (address => mapping (string => bool)) editAccess;
+    mapping (address => mapping(address => mapping (string => bool))) editAccess;
 
     /**
       * viewAccess holds grants for other addresses to view all data categories.
-      * The keys are user addresses and values are booleans.
+      * The keys are data owner addresses and values are mappings. The second
+      * keys are viewer addresses
       *
       * If an address has a true boolean value, then the address
       * can view to that category
       */
-    mapping (address => bool) viewAccess;
+    mapping (address => mapping (address => bool)) viewAccess;
 
     // db is the constructor
     function db() public {
@@ -48,17 +50,18 @@ contract db {
     /**
       * canView determines if the message sender can view the specified
       * address's information.
-      * @param addr Address to check view access to
+      * @param datOwner Address of data owner
+      * @param viewer Address of data viewer
       * @return bool indicating if the message sender has view access
       */
-    function canView(address addr) public view returns (bool) {
+    function canView(address datOwner, address viewer) public view returns (bool) {
         // Check if owner
-        if (msg.sender == addr) {
+        if (datOwner == viewer) {
             return true;
         }
 
         // Check viewAccess var
-        if (viewAccess[addr]) {
+        if (viewAccess[datOwner][viewer]) {
             return true;
         }
 
@@ -69,18 +72,19 @@ contract db {
     /**
       * canEdit determines if the message sender can edit an address's data for
       * a specified category.
-      * @param addr Address to check edit access to
+      * @param datOwner Address of data owner
+      * @param editor Address of data editor
       * @param category Data category to check edit access to
       * @return bool indicating if the message sender has edit access
       */
-    function canEdit(address addr, string category) public view returns (bool) {
+    function canEdit(address datOwner, address editor, string category) public view returns (bool) {
         // Check if owner
-        if (msg.sender == addr) {
+        if (datOwner == editor) {
             return true;
         }
 
         // Check editAccess var
-        if (editAccess[addr][category]) {
+        if (editAccess[datOwner][editor][category]) {
             return true;
         }
 
@@ -93,7 +97,7 @@ contract db {
       * @param addr Address to grant view access to
       */
     function grantView(address addr) public {
-        viewAccess[addr] = true;
+        viewAccess[msg.sender][addr] = true;
     }
 
     /**
@@ -101,7 +105,7 @@ contract db {
       * @param addr Address to remove view access from
       */
     function revokeView(address addr) public {
-        delete viewAccess[addr];
+        delete viewAccess[msg.sender][addr];
     }
 
     /**
@@ -110,7 +114,7 @@ contract db {
       * @param category string Data category to grant edit access to
       */
     function grantEdit(address addr, string category) public {
-        editAccess[addr][category] = true;
+        editAccess[msg.sender][addr][category] = true;
     }
 
     /**
@@ -119,7 +123,7 @@ contract db {
       * @param category Data category to remove edit access from
       */
     function revokeEdit(address addr, string category) public {
-        delete editAccess[addr][category];
+        delete editAccess[msg.sender][addr][category];
     }
 
     /**
@@ -130,7 +134,7 @@ contract db {
       */
     function get(address addr, string category) public view returns (string) {
         // Ensure owner or person with access
-        require(canView(addr));
+        require(canView(addr, msg.sender));
 
         // Return data
         return data[addr][category];
@@ -144,7 +148,7 @@ contract db {
       */
     function set(address addr, string category, string blob) public {
         // Ensure message sender can edit address's information
-        require(canEdit(addr, category));
+        require(canEdit(addr, msg.sender, category));
 
         // Set
         data[msg.sender][category] = blob;
