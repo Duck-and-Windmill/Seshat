@@ -24,6 +24,13 @@ function main() {
 			changePanel()
 		}
 	});
+
+	$('#bu').click(function() {
+		$('.hidden-1').show();
+	});
+	$('#neu').click(function() {
+		$('.hidden-2').show();
+	});
 }
 
 $(document).ready(function() {
