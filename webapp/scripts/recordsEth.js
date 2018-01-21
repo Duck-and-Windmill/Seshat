@@ -1,58 +1,48 @@
-if (typeof web3 !== 'undefined') {
-    web3 = new Web3(web3.currentProvider);
-} else {
-    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+/**
+ * ethConnect connects to the geth rpc connection.
+ * @returns Web3 object with Etherium API
+ */
+function ethConnect() {
+    if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+    } else {
+        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    }
 }
 
-var abi = [
-      {
-          "constant": false,
-          "inputs": [
-          {
-              "name": "str",
-              "type": "string"
-          }
-          ],
-          "name": "set",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-          {
-              "name": "addr",
-              "type": "address"
-          }
-          ],
-          "name": "get",
-          "outputs": [
-          {
-              "name": "",
-              "type": "string"
-          }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "inputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "constructor"
-      }
-      ];
+// Connect to geth API
+web3 = ethConnect();
 
-var def = web3.eth.contract(abi);
-var contract = def.at('0x3fd9fb67867057f2c0fc15d029b207f4219428fe')
-web3.eth.defaultAccount = web3.eth.coinbase;
-var coinbase = web3.eth.coinbase;
-var balance = web3.eth.getBalance(coinbase);
+// Constants
+var dbAbi = [{"constant": false,"inputs": [{"name": "str","type": "string"}],"name": "set","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": false,"inputs": [{"name": "addr","type": "address"}],"name": "get","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "nonpayable","type": "function"},{"inputs": [],"payable": false,"stateMutability": "nonpayable","type": "constructor"}];
 
-contract.set("hey noah it worked");
-setTimeout(function(){
-    console.log(contract.get.call(web3.eth.defaultAccount))
-}, 3000);
+const dbAddr = "0x3fd9fb67867057f2c0fc15d029b207f4219428fe"
+const selfAddr = web3.eth.coinbase;
+
+// Ensure default account is set
+if (web3.eth.defaultAccount != selfAddr) {
+    web3.eth.defaultAccount = selfAddr;
+}
+
+// Get database contract
+const dbDef = web3.eth.contract(dbAbi);
+const dbContract = dbDef.at(dbAddr)
+
+/**
+ * setDb updates a piece of information using the database contract
+ * @param addr String Address of data owner
+ * @param category String Name of type of data
+ * @param obj Object data to store
+ */
+function setDb(addr, category, obj) {
+
+}
+
+/**
+ * getDb retrieves a piece of information using the database contract
+ * @param addr String Address of the data owner
+ * @param category String Name of type of data
+ * @returns Object Data
+ */
+function getDb(add, category) {
+}
