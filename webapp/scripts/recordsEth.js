@@ -14,9 +14,9 @@ function ethConnect() {
 web3 = ethConnect();
 
 // Constants
-var dbAbi = [{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"grantEdit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"kill","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"}],"name":"canView","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"revokeEdit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"grantView","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"canEdit","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"},{"name":"blob","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"revokeView","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
+var dbAbi = [{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"grantEdit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"kill","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"revokeEdit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"datOwner","type":"address"},{"name":"viewer","type":"address"}],"name":"canView","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"grantView","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"datOwner","type":"address"},{"name":"editor","type":"address"},{"name":"category","type":"string"}],"name":"canEdit","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"},{"name":"blob","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"revokeView","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
 
-const dbAddr = "0x2d5d5fef492d2d7d0e24b18f454f3b53d7520a45"
+const dbAddr = "0x7a472a829c2bb920e6b96cc1979487b3880cd8c3"
 const selfAddr = web3.eth.coinbase;
 
 const CAT_BIO = "bio";
@@ -39,7 +39,8 @@ const dbContract = dbDef.at(dbAddr)
  * @param obj Object data to store
  */
 function setObj(addr, category, obj) {
-    dbContract.set(addr, category, obj);
+    console.log(addr, category, obj)
+    dbContract.set.call(addr, category, obj);
 }
 
 /**
@@ -52,14 +53,50 @@ function getObj(addr, category) {
     return dbContract.get.call(addr, category);
 }
 
-window.onload = function() {
-    var bioData = JSON.parse(getObj(selfAddr, CAT_BIO));
-    var transcriptData = JSON.parse(getObj(selfAddr, CAT_TRANSCRIPT));
-    var testData = JSON.parse(getObj(selfAddr, CAT_TESTS));
+//window.onload = function() {
+    var bioData, transcriptData, testData;
+    bioRaw = getObj(selfAddr, CAT_BIO);
+    if (bioRaw != null && bioRaw != "") {
+        bioData = JSON.parse(bioRaw);
+    }
+    transcriptRaw = getObj(selfAddr, CAT_TRANSCRIPT);
+    if (transcriptRaw != null && transcriptRaw != "") {
+        transcriptData = JSON.parse(transcriptRaw);
+    }
+    testRaw = getObj(selfAddr, CAT_TESTS);
+    if (testRaw != null && testRaw != "") {
+        testData = JSON.parse(testRaw);
+    }
+
 
     var transcriptBody = document.querySelector("#transcript-text");
     var testBody = document.querySelector("#tests-text");
 
-    transcriptBody.text = JSON.stringify(transcriptData, null, 4);
-    testBody.text = JSON.stringify(testData, null, 4);
-}
+    if (transcriptData != null) {
+        transcriptBody.text = JSON.stringify(transcriptData, null, 4);
+    }
+    if (testData != null) {
+        testBody.text = JSON.stringify(testData, null, 4);
+    }
+
+    if (bioData != null) {
+        document.querySelector("#bio-first-name").value = (bioData.firstName != null) ? bioData.firstName : '';
+        document.querySelector("#bio-middle-name").value = (bioData.middleName != null) ? bioData.middleName : '';
+        document.querySelector("#bio-last-name").value = (bioData.lastName != null) ? bioData.lastName : '';
+        document.querySelector("#bio-dob").value = (bioData.dob != null) ? bioData.dob : '';
+        document.querySelector("#bio-languages").value = (bioData.languages != null) ? bioData.languages : '';
+        document.querySelector("#bio-nationality").value = (bioData.nationality != null) ? bioData.nationality : '';
+    }
+
+
+    document.querySelector("#update-bio").addEventListener('click', function(){
+        var data = {};
+        data.firstName = document.querySelector("#bio-first-name").value;
+        data.middleName = document.querySelector("#bio-middle-name").value;
+        data.lastName = document.querySelector("#bio-last-name").value;
+        data.dob = document.querySelector("#bio-dob").value;
+        data.languages = document.querySelector("#bio-languages").value;
+        data.nationality = document.querySelector("#bio-nationality").value;
+        setObj(selfAddr, CAT_BIO, JSON.stringify(data));
+    });
+//}
