@@ -41,6 +41,7 @@ const dbContract = dbDef.at(dbAddr)
  * @param obj Object data to store
  */
 function setObj(addr, obj) {
+    console.log(addr);
     dbContract.set(addr, JSON.stringify(obj));
 }
 
@@ -52,6 +53,7 @@ function setObj(addr, obj) {
  */
 function getObj(addr, cb) {
     dbContract.get(addr, function(error, data){
+        console.log(addr, data);
         cb(JSON.parse(data));
     });
 }
@@ -106,6 +108,8 @@ document.querySelector("#update-bio").addEventListener('click', function(){
     bioData.nationality = document.querySelector("#bio-nationality").value;
 
     data[CAT_BIO] = bioData;
+
+    console.log(data);
 
     setObj(selfAddr, data);
 });
