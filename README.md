@@ -1,8 +1,5 @@
 # PROJECT: UNNECESSARY MEMORY (aka Seshat)
-The Ejyptian God Of Wisdom, Knowledge, and Writing.
-
-# Table Of Contents
-- [Private Chain Setup](#private-chain-setup)
+Seshat lets a user keep track of their own educational records while also guaranteeing validity for others who want to see accurate information. Instead of requiring a middleman like the CollegeBoard, students can send their info to interested parties (like colleges) directly by sending their Seshat address. Furthermore, trust is established on the network as only whitelisted authorities can make changes to a student's transcript or exam grades (authorities like schools, colleges, test administrators, etc). Furthermore, as a proof of concept, Seshat provides an example exam that can grade a student's answers and directly update their records, showing that even testing can be done in a decentralized fashion.
 
 # Private Chain Setup
 Run the following commands in bash from the root of the repository:
@@ -32,3 +29,22 @@ And type the following commands:
     - Will stop the miner, we probably have enough etherium by now
 - `eth.getBalance(eth.coinbase)`
     - Will check how much eth you have
+
+# Smart Contract Deployment
+First, inside a `geth attach` terminal, run:
+
+- `personal.unlockAccount(eth.defaultAccount)`
+- `miner.start()`
+
+Next, run the following commands in bash from the root of the repository:
+
+- `truffle compile`
+- `truffle migrate --reset`
+
+Now, the contract is deployed (and you can stop mining if you want).
+
+# Prepare Webapp
+After the smart contract is deployed and the chain is ready, get the DB contract ABI
+from the build directory, and get its address with:
+
+- `truffle exec getContractAddress.js`
