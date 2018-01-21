@@ -9,7 +9,7 @@ contract db {
       * The first keys are owner addresses. Values are mappings. Where keys
       * are data categories, and values are string blobs.
       */
-    mapping (address => mapping (string => string)) data;
+    mapping (address => string) data;
 
     /**
       * editAccess holds grants to edit data categories.
@@ -30,7 +30,7 @@ contract db {
       * If an address has a true boolean value, then the address
       * can view to that category
       */
-    mapping (address => mapping (address => bool)) viewAccess;
+    //mapping (address => mapping (address => bool)) viewAccess;
 
     // db is the constructor
     function db() public {
@@ -54,9 +54,10 @@ contract db {
       * @param viewer Address of data viewer
       * @return bool indicating if the message sender has view access
       */
+      /*
     function canView(address datOwner, address viewer) public view returns (bool) {
         // Check if owner
-        if (datOwner == viewer) {
+        if (keccak256(datOwner) == keccak256(viewer)) {
             return true;
         }
 
@@ -68,6 +69,7 @@ contract db {
         // Otherwise no access
         return false;
     }
+    */
 
     /**
       * canEdit determines if the message sender can edit an address's data for
@@ -98,17 +100,21 @@ contract db {
       * grantView gives view access to the message sender's data
       * @param addr Address to grant view access to
       */
+     /*
     function grantView(address addr) public {
         viewAccess[msg.sender][addr] = true;
     }
+    */
 
     /**
       * revokeView removes view access to the message sender's data
       * @param addr Address to remove view access from
       */
+     /*
     function revokeView(address addr) public {
         delete viewAccess[msg.sender][addr];
     }
+    */
 
     /**
       * grantEdit gives edit access to the message sender's data
@@ -135,24 +141,20 @@ contract db {
     /**
       * get retrieves information for the specified address and category.
       * @param addr Address to get data for
-      * @param category Category to get data for
       * @return string Blob of data
       */
-    function get(address addr, string category) public view returns (string) {
-        require(canView(addr, msg.sender));
-
+    function get(address addr) public view returns (string) {
         // Return data
-        return data[addr][category];
+        return data[addr];
     }
 
     /**
       * set sets a data category's value
       * @param addr Address to edit data for
-      * @param category Category to save data for
       * @param blob String data blob to store
       */
-    function set(address addr, string category, string blob) public {
+    function set(address addr, string blob) public {
         // Set
-        data[addr][category] = blob;
+        data[addr] = blob;
     }
 }
