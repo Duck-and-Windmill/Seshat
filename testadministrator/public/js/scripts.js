@@ -67,6 +67,4 @@ function grade() {
 }
 
 $(document).ready(function() {
-
-
 });
