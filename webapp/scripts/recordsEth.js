@@ -4,9 +4,9 @@
  */
 function ethConnect() {
     if (typeof web3 !== 'undefined') {
-        web3 = new Web3(web3.currentProvider);
+        return new Web3(web3.currentProvider);
     } else {
-        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        return new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
     }
 }
 
@@ -14,9 +14,9 @@ function ethConnect() {
 web3 = ethConnect();
 
 // Constants
-var dbAbi = [{"constant": false,"inputs": [{"name": "str","type": "string"}],"name": "set","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": false,"inputs": [{"name": "addr","type": "address"}],"name": "get","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "nonpayable","type": "function"},{"inputs": [],"payable": false,"stateMutability": "nonpayable","type": "constructor"}];
+var dbAbi = [{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"grantEdit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"kill","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"}],"name":"canView","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"revokeEdit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"grantView","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"canEdit","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"},{"name":"blob","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"revokeView","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"},{"name":"category","type":"string"}],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
 
-const dbAddr = "0x3fd9fb67867057f2c0fc15d029b207f4219428fe"
+const dbAddr = "0x2d5d5fef492d2d7d0e24b18f454f3b53d7520a45"
 const selfAddr = web3.eth.coinbase;
 
 const CAT_BIO = "bio";
@@ -39,7 +39,7 @@ const dbContract = dbDef.at(dbAddr)
  * @param obj Object data to store
  */
 function setObj(addr, category, obj) {
-    dbContract.setObj(addr, category, obj);
+    dbContract.set(addr, category, obj);
 }
 
 /**
@@ -49,14 +49,17 @@ function setObj(addr, category, obj) {
  * @returns Object Data
  */
 function getObj(addr, category) {
-    return dbContract.getObj.call(addr, category);
+    return dbContract.get.call(addr, category);
 }
 
 window.onload = function() {
-    var bioData = JSON.parse(getObj(selfAddr, ));
-    var transcriptData = JSON.parse(getObj(selfAddr, ));
-    var testData = JSON.parse(getObj(selfAddr, ));
+    var bioData = JSON.parse(getObj(selfAddr, CAT_BIO));
+    var transcriptData = JSON.parse(getObj(selfAddr, CAT_TRANSCRIPT));
+    var testData = JSON.parse(getObj(selfAddr, CAT_TESTS));
 
     var transcriptBody = document.querySelector("#transcript-text");
     var testBody = document.querySelector("#tests-text");
+
+    transcriptBody.text = JSON.stringify(transcriptData, null, 4);
+    testBody.text = JSON.stringify(testData, null, 4);
 }
