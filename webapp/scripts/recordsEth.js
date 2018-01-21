@@ -52,19 +52,21 @@ function setObj(addr, obj) {
  * @returns Object Data
  */
 function getObj(addr, cb) {
-    dbContract.get(addr, function(a, b, c){
-        console.log("getObj: ", a, b, c);
-        cb(a, b, c);
+    dbContract.get(addr, function(error, data){
+        cb(JSON.parse(data));
     });
 }
 
 //window.onload = function() {
 var bioData, transcriptData, testData;
-var dat = getObj(selfAddr, function(a, b, c) {
-    console.log(a, b, c);
-});
+var data = {};
+getObj(selfAddr, setPersonalInfo);
+document.querySelector("#addr-input").value = selfAddr;
 
 function setPersonalInfo(dat) {
+    if (dat != null) {
+    console.log(dat)
+    data = dat;
     if(dat[CAT_BIO] == undefined) {
         dat[CAT_BIO] = {};
     }
@@ -72,6 +74,7 @@ function setPersonalInfo(dat) {
     bioData = dat[CAT_BIO];
     transcriptData = dat[CAT_TRANSCRIPT];
     testData = dat[CAT_TESTS];
+    }
 
     var transcriptBody = document.querySelector("#transcript-text");
     var testBody = document.querySelector("#tests-text");
@@ -104,9 +107,14 @@ function setPersonalInfo(dat) {
         bioData.languages = document.querySelector("#bio-languages").value;
         bioData.nationality = document.querySelector("#bio-nationality").value;
 
-        console.log(bioData, dat);
+        console.log(bioData, data);
 
-        dat[CAT_BIO] = bioData;
-        setObj(selfAddr, dat);
+        data[CAT_BIO] = bioData;
+        setObj(selfAddr, data);
+    });
+
+
+    document.querySelector("#search-addr").addEventListener('click', function(){
+        getObj(document.querySelector("#addr-input").value, setPersonalInfo);
     });
 //}

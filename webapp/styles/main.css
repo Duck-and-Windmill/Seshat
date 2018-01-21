@@ -142,3 +142,7 @@ html, body {
 .panel.active {
     display: block;
 }
+
+.mdc-text-field__input {
+    padding: 10px;
+}
