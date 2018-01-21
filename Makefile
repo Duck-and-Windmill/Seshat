@@ -1,4 +1,4 @@
-.PHONY: connect server upload upload-dirs upload-files
+.PHONY: connect server upload upload-dirs upload-files deploy
 
 SSH_USER="root"
 SSH_HOST="seshat.noahh.io"
@@ -25,3 +25,9 @@ upload-dirs:
 # upload-files uploads the specified source files
 upload-files:
 	scp "${SRC_FILES}" "${SSH_USER}@${SSH_HOST}:${REMOTE_DIR}"
+
+# deploy creates new smart contracts
+deploy:
+	truffle compile
+	truffle migrate --reset
+	truffle exec getContractAddress.js

@@ -1,4 +1,11 @@
-/* Add Here */
+:root {
+    --mdc-theme-primary: #d0623f;
+}
+
+*, html {
+    margin: 0;
+    padding: 0;
+}
 
 html, body {
 	width: 100%;
@@ -23,7 +30,7 @@ html, body {
 }
 .mdc-card__actions.reversed {
     flex-direction: row-reverse;
-}      
+}
 
 .full {
 	width: 100%;
@@ -36,15 +43,15 @@ html, body {
 	justify-content: center;
 	/*
 	background: linear-gradient(
-      rgba(192,192,192, 0.3), 
+      rgba(192,192,192, 0.3),
       rgba(192,192,192, 0.3)
     ), url(../imgs/banner.jpg);
     */
     background-image: url(../imgs/banner-1.jpg);
-	background-position: 0;
-	background-repeat: no-repeat;
-	background-size: cover;
-	z-index: 1;
+    background-position: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
 }
 
 .center {
@@ -95,4 +102,43 @@ html, body {
 
 #switch img:hover {
 	cursor: pointer;
+}
+
+#content {
+    margin-top: 64px;
+    max-width: 800px;
+}
+
+.toolbar-link {
+    color: rgba(255,255,255,0.7);
+    padding: 24px;
+    text-decoration: none;
+}
+
+.toolbar-link:hover {
+    color: rgba(255,255,255,1.0);
+}
+
+.mdc-card__primary.flexed {
+    display: flex;
+    justify-content: space-between;
+}
+.mdc-card__actions.reversed {
+    flex-direction: row-reverse;
+}
+.mdc-card {
+    margin: 50px 0 50px 0;
+}
+.edit-button {
+    color: rgba(125,125,125,0.7);
+}
+.edit-button:hover {
+    color: rgba(125,125,125,1.0);
+}
+
+.panel {
+    display: none;
+}
+.panel.active {
+    display: block;
 }
