@@ -4,9 +4,9 @@
  */
 function ethConnect() {
     if (typeof web3 !== 'undefined') {
-        web3 = new Web3(web3.currentProvider);
+        return new Web3(web3.currentProvider);
     } else {
-        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        return new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
     }
 }
 
@@ -14,9 +14,11 @@ function ethConnect() {
 web3 = ethConnect();
 
 // Constants
-var dbAbi = [{"constant": false,"inputs": [{"name": "str","type": "string"}],"name": "set","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": false,"inputs": [{"name": "addr","type": "address"}],"name": "get","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "nonpayable","type": "function"},{"inputs": [],"payable": false,"stateMutability": "nonpayable","type": "constructor"}];
+var dbAbi = [{"constant":false,"inputs":[],"name":"kill","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"blob","type":"string"}],"name":"set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"addr","type":"address"}],"name":"get","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
 
-const dbAddr = "0x3fd9fb67867057f2c0fc15d029b207f4219428fe"
+
+
+const dbAddr = "0xe195208dd5bf78b41d7b554693dbf991c4193d47"
 const selfAddr = web3.eth.coinbase;
 
 const CAT_BIO = "bio";
@@ -38,8 +40,9 @@ const dbContract = dbDef.at(dbAddr)
  * @param category String Name of type of data
  * @param obj Object data to store
  */
-function setObj(addr, category, obj) {
-
+function setObj(addr, obj) {
+    //console.log(addr, obj)
+    dbContract.set(addr, JSON.stringify(obj));
 }
 
 /**
@@ -48,5 +51,54 @@ function setObj(addr, category, obj) {
  * @param category String Name of type of data
  * @returns Object Data
  */
-function getObj(add, category) {
+function getObj(addr) {
+    return JSON.parse(dbContract.get(addr));
 }
+
+//window.onload = function() {
+    var bioData, transcriptData, testData;
+    var dat = getObj(selfAddr);
+    if(dat[CAT_BIO] == undefined) {
+        dat[CAT_BIO] = {};
+    }
+
+    bioData = dat[CAT_BIO];
+    transcriptData = dat[CAT_TRANSCRIPT];
+    testData = dat[CAT_TESTS];
+
+    var transcriptBody = document.querySelector("#transcript-text");
+    var testBody = document.querySelector("#tests-text");
+
+    if (transcriptData != null) {
+        transcriptBody.text = JSON.stringify(transcriptData, null, 4);
+    }
+    if (testData != null) {
+        testBody.text = JSON.stringify(testData, null, 4);
+    }
+
+    if (bioData != null) {
+        document.querySelector("#bio-first-name").value = (bioData.firstName != null) ? bioData.firstName : '';
+        document.querySelector("#bio-middle-name").value = (bioData.middleName != null) ? bioData.middleName : '';
+        document.querySelector("#bio-last-name").value = (bioData.lastName != null) ? bioData.lastName : '';
+        document.querySelector("#bio-dob").value = (bioData.dob != null) ? bioData.dob : '';
+        document.querySelector("#bio-languages").value = (bioData.languages != null) ? bioData.languages : '';
+        document.querySelector("#bio-nationality").value = (bioData.nationality != null) ? bioData.nationality : '';
+    }
+
+
+    document.querySelector("#update-bio").addEventListener('click', function(){
+        var bioData = {};
+
+        bioData.firstName = document.querySelector("#bio-first-name").value;
+        bioData.middleName = document.querySelector("#bio-middle-name").value;
+        bioData.lastName = document.querySelector("#bio-last-name").value;
+        bioData.dob = document.querySelector("#bio-dob").value;
+        bioData.languages = document.querySelector("#bio-languages").value;
+        bioData.nationality = document.querySelector("#bio-nationality").value;
+
+        console.log(bioData, dat);
+
+        dat[CAT_BIO] = bioData;
+        setObj(selfAddr, dat);
+    });
+//}
