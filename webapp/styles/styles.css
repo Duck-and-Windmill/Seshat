@@ -92,6 +92,7 @@ label {
 	font-size: 5em;
 	font-weight: 150;
 	text-align: center; 
+	box-shadow: 1px 1px grey;
 } 
 
 #resulttext {
