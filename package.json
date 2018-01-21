@@ -1,0 +1,26 @@
+{
+  "name": "seshat-chain",
+  "version": "1.0.0",
+  "description": "The Ejyptian God Of Wisdom, Knowledge, and Writing.",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "truffle compile && truffle migrate --reset"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Duck-and-Windmill/Seshat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Duck-and-Windmill/Seshat/issues"
+  },
+  "homepage": "https://github.com/Duck-and-Windmill/Seshat#readme",
+  "dependencies": {
+    "truffle": "^4.0.5"
+  }
+}
