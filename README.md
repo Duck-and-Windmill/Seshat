@@ -1,4 +1,4 @@
-# Seshat
+# PROJECT: UNNECESSARY MEMORY (aka Seshat)
 The Ejyptian God Of Wisdom, Knowledge, and Writing.
 
 # Table Of Contents
@@ -7,7 +7,6 @@ The Ejyptian God Of Wisdom, Knowledge, and Writing.
 # Private Chain Setup
 Run the following commands in bash from the root of the repository:
 
-- Edit the `setup/.env` file, change the `NODE_NAME` value to your name
 - Run `source setup/.env`
 - Run `./setup/init`
 - Run `./setup/client`

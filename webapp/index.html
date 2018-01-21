@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
     <link rel="stylesheet" href="styles/main.css">
     <link href="https://fonts.googleapis.com/css?family=Merriweather|Raleway" rel="stylesheet">
-    <link rel="icon" href="">
+    <link rel="icon" href="./imgs/icon.png"> <!-- Credit to Fengquan Li from The Noun Project-->
 
     <style>
         :root {
@@ -14,23 +14,32 @@
     </style>
 </head>
 
-<body class="">
-    <header class="mdc-toolbar mdc-toolbar--fixed mdc-toolbar--waterfall" style="background-color: rgba(255,255,255,0);">
+<body>
+    <header class="mdc-toolbar mdc-toolbar--fixed mdc-toolbar--waterfall" style="background-image: url(./imgs/banner-1.jpg);background-size: cover">
         <div class="mdc-toolbar__row">
             <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-                <span id="toolbar-icon" class="mdc-toolbar__title"><a href="" style="text-decoration: none;color:white;">&#x132c7;</a></span>
+                <span id="toolbar-icon" class="mdc-toolbar__title"><a href="" style="text-decoration: none;color:white;"></a></span>
             </section>
 
             <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
-                <span class="mdc-toolbar__title"><a href="index.html" style="margin-left:0;font-family: 'Merriweather', serif;" class="toolbar-link">Home</a></span>
-                <span class="mdc-toolbar__title" style="margin-left:0;"><a href="records.html" style="font-family: 'Merriweather', serif;" class="toolbar-link">Records</a></span>
+                <span class="mdc-toolbar__title"><a id="but-1" style="margin-left:0;font-family: 'Merriweather', serif;" class="toolbar-link">About</a></span>
+                <span class="mdc-toolbar__title" style="margin-left:-3%;"><a href="records.html" style="font-family: 'Merriweather', serif;" class="toolbar-link">Records</a></span>
             </section>
         </div>
     </header>
 
+    <div id="switch"><img src="./imgs/up.png" style="display: block"></div>
+
     <div class="full panel-1">
         <article id="banner-text" class="center">
-            <h1 class="">Seshat</h1>
+            <h1 style="font-weight: 10;">Seshat</h1>
+        </article>
+    </div>
+
+    <div class="full back-panel" style="display: none;">
+        <article style="display: block;padding-left: 5%;">
+            <h1 style="font-size: 3em;">About</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </article>
     </div>
             
@@ -40,6 +49,8 @@
         <label for="demo-input" class="mdc-text-field__label">{{ message }}</label>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src=./scripts/main.js></script>
     <script src="node_modules/vue/dist/vue.js"></script>
     <script src="node_modules/material-components-web/dist/material-components-web.js"></script>
     <script>
