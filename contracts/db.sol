@@ -15,6 +15,12 @@ contract db {
         owner = msg.sender;
     }
 
+    // deletes the contract
+    function kill() {
+        require(msg.sender == owner);
+        selfdestruct(owner);
+    }
+
     // get retrieves information for the specified address
     function get(address addr) returns (string) {
         return data[addr];

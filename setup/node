@@ -3,4 +3,6 @@ source ./setup/.env
 geth \
     --networkid "$NET_ID" \
     --datadir "$DATA_DIR" \
-    --bootnodes "$ENODE"
+    --bootnodes "$ENODE" \
+    --rpc \
+    --rpccorsdomain "*"

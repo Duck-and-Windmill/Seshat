@@ -1,4 +1,0 @@
-#!/bin/bash
-geth \
-    --networkid "$NET_ID" \
-    --datadir "$DATA_DIR"
