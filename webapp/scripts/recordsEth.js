@@ -19,6 +19,10 @@ var dbAbi = [{"constant": false,"inputs": [{"name": "str","type": "string"}],"na
 const dbAddr = "0x3fd9fb67867057f2c0fc15d029b207f4219428fe"
 const selfAddr = web3.eth.coinbase;
 
+const CAT_BIO = "bio";
+const CAT_TESTS = "tests";
+const CAT_TRANSCRIPT = "transcript";
+
 // Ensure default account is set
 if (web3.eth.defaultAccount != selfAddr) {
     web3.eth.defaultAccount = selfAddr;
