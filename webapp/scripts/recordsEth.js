@@ -61,7 +61,7 @@ function getObj(addr) {
     if(dat[CAT_BIO] == undefined) {
         dat[CAT_BIO] = {};
     }
-    var noahtest = "foo";
+
     bioData = dat[CAT_BIO];
     transcriptData = dat[CAT_TRANSCRIPT];
     testData = dat[CAT_TESTS];
