@@ -23,10 +23,3 @@ dynamicTabBar.listen('MDCTabBar:change', function ({detail: tabs}) {
 
     updatePanel(nthChildIndex);
 });
-
-var app = new Vue({
-    el: '#app',
-    data: {
-        message: 'MEOWMEOW!'
-    }
-});

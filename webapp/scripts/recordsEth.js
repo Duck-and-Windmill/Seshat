@@ -3,11 +3,11 @@
  * @returns Web3 object with Etherium API
  */
 function ethConnect() {
-    if (typeof web3 !== 'undefined') {
-        return new Web3(web3.currentProvider);
-    } else {
+    //if (typeof web3 !== 'undefined') {
+    //   return new Web3(web3.currentProvider);
+    //} else {
         return new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-    }
+    //}
 }
 
 // Connect to geth API
@@ -41,7 +41,6 @@ const dbContract = dbDef.at(dbAddr)
  * @param obj Object data to store
  */
 function setObj(addr, obj) {
-    //console.log(addr, obj)
     dbContract.set(addr, JSON.stringify(obj));
 }
 
@@ -51,13 +50,22 @@ function setObj(addr, obj) {
  * @param category String Name of type of data
  * @returns Object Data
  */
-function getObj(addr) {
-    return JSON.parse(dbContract.get(addr));
+function getObj(addr, cb) {
+    dbContract.get(addr, function(error, data){
+        cb(JSON.parse(data));
+    });
 }
 
 //window.onload = function() {
-    var bioData, transcriptData, testData;
-    var dat = getObj(selfAddr);
+var bioData, transcriptData, testData;
+var data = {};
+getObj(selfAddr, setPersonalInfo);
+
+document.querySelector("#addr-input").value = selfAddr;
+
+function setPersonalInfo(dat) {
+    data = dat;
+
     if(dat[CAT_BIO] == undefined) {
         dat[CAT_BIO] = {};
     }
@@ -84,21 +92,25 @@ function getObj(addr) {
         document.querySelector("#bio-languages").value = (bioData.languages != null) ? bioData.languages : '';
         document.querySelector("#bio-nationality").value = (bioData.nationality != null) ? bioData.nationality : '';
     }
+}
 
 
-    document.querySelector("#update-bio").addEventListener('click', function(){
-        var bioData = {};
+document.querySelector("#update-bio").addEventListener('click', function(){
+    var bioData = {};
 
-        bioData.firstName = document.querySelector("#bio-first-name").value;
-        bioData.middleName = document.querySelector("#bio-middle-name").value;
-        bioData.lastName = document.querySelector("#bio-last-name").value;
-        bioData.dob = document.querySelector("#bio-dob").value;
-        bioData.languages = document.querySelector("#bio-languages").value;
-        bioData.nationality = document.querySelector("#bio-nationality").value;
+    bioData.firstName = document.querySelector("#bio-first-name").value;
+    bioData.middleName = document.querySelector("#bio-middle-name").value;
+    bioData.lastName = document.querySelector("#bio-last-name").value;
+    bioData.dob = document.querySelector("#bio-dob").value;
+    bioData.languages = document.querySelector("#bio-languages").value;
+    bioData.nationality = document.querySelector("#bio-nationality").value;
 
-        console.log(bioData, dat);
+    data[CAT_BIO] = bioData;
 
-        dat[CAT_BIO] = bioData;
-        setObj(selfAddr, dat);
-    });
-//}
+    setObj(selfAddr, data);
+});
+
+
+document.querySelector("#search-addr").addEventListener('click', function(){
+    getObj(document.querySelector("#addr-input").value, setPersonalInfo);
+});

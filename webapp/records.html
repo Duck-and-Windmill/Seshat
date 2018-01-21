@@ -1,5 +1,7 @@
 <html>
 <head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Seshat - Records</title>
 
     <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
@@ -14,8 +16,7 @@
             </section>
             <section class="mdc-toolbar__section">
                 <nav id="basic-tab-bar" class="mdc-tab-bar">
-                    <a class="mdc-tab mdc-tab--active" href="#panel-1">Your Records</a>
-                    <a class="mdc-tab" href="#panel-2">Shared Records</a>
+                    <a class="mdc-tab mdc-tab--active" href="#panel-1">Search Records</a>
                     <span class="mdc-tab-bar__indicator"></span>
                 </nav>
             </section>
@@ -28,6 +29,11 @@
     <div class="mdc-layout-grid" id="content">
         <div class="mdc-layout-grid__inner panels">
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 panel active" id="panel-1" role="tabpanel" aria-hidden="false">
+                <div class="mdc-text-field mdc-text-field--fullwidth mdc-text-field--box mdc-text-field--with-trailing-icon mdc-text-field--upgraded">
+                  <input type="text" id="addr-input" class="mdc-text-field__input" placeholder="Address">
+                  <i class="material-icons mdc-text-field__icon" tabindex="0" id="search-addr">search</i>
+                  <div class="mdc-text-field__bottom-line"></div>
+                </div>
                 <div class="mdc-card">
                   <section class="mdc-card__primary flexed">
                     <h1 class="mdc-card__title mdc-card__title--large">Personal Information</h1>
@@ -145,32 +151,6 @@
                         <td>World History</td><td style="width:100px;text-align: right">3</td>
                       </tr>
                     </table>
-                  </section>
-                </div>
-
-                <div class="mdc-card">
-                  <section class="mdc-card__primary flexed">
-                    <h1 class="mdc-card__title mdc-card__title--large">Sharing</h1>
-                  </section>
-                  <div class="mdc-text-field mdc-text-field--fullwidth" style="padding-left: 2%">
-                        <input class="mdc-text-field__input"
-                             type="text"
-                             placeholder="Full-Width Text Field"
-                             aria-label="Full-Width Text Field">
-                    </div>
-                </div>
-            </div>
-
-            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 panel" id="panel-2" role="tabpanel" aria-hidden="true">
-                <div class="mdc-card">
-                  <section class="mdc-card__primary flexed">
-                    <h1 class="mdc-card__title mdc-card__title--large">Records Shared With You</h1>
-                  </section>
-                  <section class="mdc-card__supporting-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat.
                   </section>
                 </div>
             </div>
