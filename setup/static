@@ -5,4 +5,5 @@ geth \
     --datadir "$DATA_DIR" \
     --nat "extip:$STATIC_IP" \
     --rpc \
-    --rpcaddr "$STATIC_IP"
+    --rpcaddr "$STATIC_IP" \
+    --rpccorsdomain "*"
