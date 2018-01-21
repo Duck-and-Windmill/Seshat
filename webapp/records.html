@@ -197,55 +197,52 @@
         }
 
         var abi = [
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "str",
-          "type": "string"
-        }
-      ],
-      "name": "set",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "addr",
-          "type": "address"
-        }
-      ],
-      "name": "get",
-      "outputs": [
-        {
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    }
-  ];
+            {
+              "constant": false,
+              "inputs": [
+                {
+                  "name": "str",
+                  "type": "string"
+                }
+              ],
+              "name": "set",
+              "outputs": [],
+              "payable": false,
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "constant": false,
+              "inputs": [
+                {
+                  "name": "addr",
+                  "type": "address"
+                }
+              ],
+              "name": "get",
+              "outputs": [
+                {
+                  "name": "",
+                  "type": "string"
+                }
+              ],
+              "payable": false,
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "payable": false,
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            }
+          ];
 
         var def = web3.eth.contract(abi);
         var contract = def.at('0x7ab3fcd72c0213bbe31eea6274a32daf563f159c')
         web3.eth.defaultAccount = web3.eth.coinbase;
         var coinbase = web3.eth.coinbase;
         var balance = web3.eth.getBalance(coinbase);
-
-        console.log(web3); // {eth: .., shh: ...} // it's here!
-        console.log(balance);
 
         contract.set("i have just changed");
         setTimeout(function(){
