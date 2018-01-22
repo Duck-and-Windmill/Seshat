@@ -1,4 +1,5 @@
 # Blockchain data
-data
+chain-data
+
+# Node JS
 node_modules
-build

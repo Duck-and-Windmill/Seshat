@@ -1,7 +1,0 @@
-#!/bin/bash
-source ./setup/.env
-geth \
-    --identity "$NODE_NAME" \
-    --datadir "$DATA_DIR" \
-    init "$GENESIS"
-

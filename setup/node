@@ -1,8 +1,0 @@
-#!/bin/bash
-source ./setup/.env
-geth \
-    --networkid "$NET_ID" \
-    --datadir "$DATA_DIR" \
-    --bootnodes "$ENODE" \
-    --rpc \
-    --rpccorsdomain "*"
