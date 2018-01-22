@@ -8,7 +8,7 @@ A decentralized verified document storage platform.
     - [User](#user)
     - [Document](#document)
     - [Grant](#grant)
-    - [Key](#key)
+    - [Whitelists](#whitelists)
 - [Contracts](#contracts)
     - [Database](#database)
 
@@ -17,9 +17,9 @@ Seshat is a platform which allows users to host their own official verified
 records (ex., Passport, School Transcript, Visa, ...) on the block chain.
 
 Privacy is a core concern on the Seshat platform. All records are encrypted
-so that only individuals you specify have access to them.
+so that only the individuals you specify have access to them.
 
-Verifiability is also a prime value of Seshat. Certain types of documents (ex.,
+Verifiability is also a key value of Seshat. Certain types of documents (ex.,
 SAT Scores, Drivers License, School Transcripts, ...) can only be uploaded by
 verified identities. This behavior is enforced by Etherium Smart contracts. And
 can be verified by inspecting GPG key signatures of uploaded data.
@@ -72,25 +72,28 @@ The User data model has the following fields:
     - Many use cases require the real identity of user's be know
     - For these cases other information stored on Seshat such as driver
       licenses can used
-- `string pubKey`: GPG public key to use for encryption
-    - Used by other users to encrypt data so only certain user can view
+- `string pubKeyId`: Id of GPG key used for encryption
+    - Stored in the form: `<key server URL>:<key ID>`
+    - Public key with ID must be available to retrieve from the specified key
+      server
+    - Used by other users to encrypt data so only certains user can access data
     - Used to verify the publisher of information
 
 ## Grant
 Grant models record the level of access a user has to another user's models.
 
-Access can only be controlled on a user and model type basis. Per key access
-control is not provided (This is to say, if a user has access to your academic
-transcript)
+Access is given to categories of another user's data at a certain permission
+level.
 
-These values are used by the Database contract to determine if a user can
-perform any given operation.
+For example user A might give college B read access to all their Academic
+Transcripts.
 
 Grants have the following fields:
 
 - `address owner`: Etherium blockchain address of the data owner
-- `address other`: Etherium blockchain address of user trying to access the
-                   owners data
+- `address accessor`: Etherium blockchain address of user trying to access the
+                   owner's data
+- `string type`: Type of data model grant is giving access to
 - `uint level`: Value representing level of access the other user has.
     - This value is composed from 2 core values:
         - `1` = read access
@@ -101,6 +104,38 @@ Grants have the following fields:
         - `2` = write access
         - `3` = read and write access
         - `> 3` = invalid, no access
+
+### Self Grants
+There is a special concept called "Self Grants", used to describe the permission
+a user has to modify their own data.
+
+This is necessary to prevent users from tampering with data verified by another
+party (For example by changing their test score).
+
+Self Grants are enforced at the contract level. And are the same for
+everyone. The only way Self Grant values can be changed is by the database
+contract owner via the Database.setSelfGrant method.
+
+Self Grants are stored in a `mapping (string => uint)`. Where keys are data
+model types. And values are access levels.
+
+## Whitelists
+Whitelist models record access requirements for a specific data model type.
+Ensuring that only certain addresses alter certain types of data.
+
+Just because an address is on a whitelist does not mean it has permission to
+access data of for the whitelist's type in any way. It simply restricts the
+addresses that a user can grant certain access to.
+
+If a data model type has no associated whitelist then any address can be
+granted any level of access.
+
+Similar to self grants, whitelists are enforced at the contract level. And can
+only be changed the database contract owner. Via the Data.setWhitelist method.
+
+Whitelists are stored in a `mapping (string => mapping (address => uint))`.
+Where first level keys are data model type names. And second level keys
+are whitelist addresses. And values are access level values.
 
 # Contracts
 ## Database
