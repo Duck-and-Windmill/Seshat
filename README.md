@@ -120,7 +120,21 @@ Self Grants are stored in a `mapping (string => uint)`. Where keys are data
 model types. And values are access levels.
 
 ## Whitelists
-Whitelist models record access requirements for a specific data model type.
+Whitelist models record addresses that are recommended to be verified to have
+a certain level of access. Whitelists are just recommendation, and are not
+enforced.
+
+User's can use the requirements saved in a whitelist to verify that a piece of
+data was accessed in only the approved ways.
+
+For example someone might publish a whitelist of all the verified SAT graders.
+One can then ensure that ...
+
+TODO: Structure Seshat so that documents have a whitelist field, and if specified, access to the data will be controlled by the whitelist
+This makes whitelists optional, and the system more trustless (now only have to trust list maker, instead of app developer). users can
+publish the data for an SAT, but colleges won't accept it unless it adhere to specific whitelist
+TODO: Concept of whitelist endorsements, where users can endorse whitelist by adding their address signed by their gpg key to a list
+
 Ensuring that only certain addresses alter certain types of data.
 
 Just because an address is on a whitelist does not mean it has permission to
